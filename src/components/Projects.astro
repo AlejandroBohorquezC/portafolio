@@ -1,0 +1,246 @@
+---
+const projects = [
+  {
+    title: 'WhiteLabel AI — Plataforma B2B',
+    description: 'Plataforma completa de comunicaciones y pagos digitales. Arquitectura full-stack con NestJS y Next.js, integración con WhatsApp API de Meta, IA conversacional con OpenAI, chat en tiempo real con Pusher y autenticación con AWS Cognito.',
+    tags: ['Next.js', 'NestJS', 'TypeScript', 'AWS', 'OpenAI', 'Pusher', 'DynamoDB'],
+    type: 'Empresa',
+    period: '2024–2025',
+    featured: true,
+    url: null,
+    icon: '🤖',
+  },
+  {
+    title: 'Escuela Judicial Rodrigo Lara Bonilla',
+    description: 'Sitio web institucional para la escuela judicial del Estado colombiano. Desarrollado con Drupal como CMS, gestión avanzada de contenidos y arquitectura de información para entidad oficial.',
+    tags: ['Drupal', 'PHP', 'HTML/CSS'],
+    type: 'Freelance',
+    period: '2026',
+    featured: true,
+    url: 'https://www.ejrlb.gov.co',
+    icon: '🏛️',
+  },
+  {
+    title: 'Electoral Commission of Fiji',
+    description: 'Sitio web para la comisión electoral del gobierno de Fiji. Proyecto internacional con WordPress y Divi Builder, cumpliendo estándares gubernamentales de accesibilidad y presentación de información pública.',
+    tags: ['WordPress', 'Divi Builder', 'PHP'],
+    type: 'Freelance',
+    period: '2025',
+    featured: true,
+    url: null,
+    icon: '🗳️',
+  },
+  {
+    title: 'Plataforma de Educación Psicológica',
+    description: 'Aplicación web educativa con backend en Laravel (endpoints PHP para formularios y respuestas dinámicas) y frontend en Next.js con React. Integración completa frontend-backend desarrollada de forma independiente.',
+    tags: ['Laravel', 'PHP', 'React', 'Next.js'],
+    type: 'Freelance',
+    period: '2025',
+    featured: false,
+    url: null,
+    icon: '🧠',
+  },
+  {
+    title: 'Gestor Documental — The Pursuit of Value',
+    description: 'Frontend de un sistema de gestión documental con drag & drop para carga de archivos, previsualizador integrado y estado global con Redux Toolkit. Diseño ejecutado desde Figma.',
+    tags: ['Next.js', 'TypeScript', 'Redux Toolkit', 'Styled Components'],
+    type: 'Empresa',
+    period: '2022',
+    featured: false,
+    url: null,
+    icon: '📁',
+  },
+  {
+    title: 'Organic Nails — E-commerce',
+    description: 'Tienda e-commerce para empresa de maquillaje colombiana. Personalización completa de plantilla, adaptación a identidad visual de la marca y puesta en producción exitosa.',
+    tags: ['WordPress', 'E-commerce', 'CSS'],
+    type: 'Freelance',
+    period: '2023',
+    featured: false,
+    url: null,
+    icon: '💅',
+  },
+];
+
+const featured = projects.filter(p => p.featured);
+const rest     = projects.filter(p => !p.featured);
+---
+
+<section id="proyectos" aria-labelledby="proyectos-heading">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-label">Proyectos</div>
+      <h2 id="proyectos-heading">Lo que he <span>construido</span></h2>
+    </div>
+
+    <!-- Featured -->
+    <div class="projects-featured">
+      {featured.map((p, i) => (
+        <article class={`project-card card reveal ${p.url ? 'has-link' : ''}`} style={`transition-delay:${i * 0.1}s`}>
+          <div class="project-top">
+            <span class="project-icon" aria-hidden="true">{p.icon}</span>
+            <div class="project-meta-row">
+              <span class="tag">{p.type}</span>
+              <span class="project-period mono">{p.period}</span>
+            </div>
+          </div>
+
+          <h3 class="project-title">{p.title}</h3>
+          <p class="project-desc">{p.description}</p>
+
+          <div class="project-tags">
+            {p.tags.map(t => <span class="tag">{t}</span>)}
+          </div>
+
+          {p.url && (
+            <a href={p.url} target="_blank" rel="noopener noreferrer" class="project-link" aria-label={`Ver proyecto: ${p.title}`}>
+              <span>Ver proyecto</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          )}
+
+          <div class="project-glow-border" aria-hidden="true"></div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Other projects -->
+    <h3 class="other-projects-title reveal">Otros proyectos</h3>
+    <div class="projects-other">
+      {rest.map((p, i) => (
+        <article class="project-small card reveal" style={`transition-delay:${i * 0.08}s`}>
+          <div class="project-small-header">
+            <span class="project-icon-sm" aria-hidden="true">{p.icon}</span>
+            <span class="tag">{p.type}</span>
+            <span class="project-period mono">{p.period}</span>
+          </div>
+          <h3 style="font-size:1rem;margin-bottom:0.5rem">{p.title}</h3>
+          <p style="font-size:0.88rem;margin-bottom:1rem">{p.description}</p>
+          <div class="project-tags">
+            {p.tags.map(t => <span class="tag">{t}</span>)}
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+.projects-featured {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+
+.project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.project-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.project-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project-period {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.project-title {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: auto;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--blue-glow);
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  transition: var(--transition);
+}
+.project-link:hover { gap: 0.65rem; }
+
+.project-glow-border {
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--blue-elec), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  z-index: -1;
+  pointer-events: none;
+}
+.project-card:hover .project-glow-border { opacity: 0.15; }
+
+/* Other projects */
+.other-projects-title {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.projects-other {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.project-small { padding: 1.5rem; }
+
+.project-small-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-icon-sm { font-size: 1.25rem; }
+</style>

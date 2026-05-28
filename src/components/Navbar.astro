@@ -1,0 +1,196 @@
+---
+const navLinks = [
+  { href: '#sobre-mi', label: 'Sobre mí' },
+  { href: '#skills',   label: 'Skills' },
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#experiencia', label: 'Experiencia' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<nav id="navbar" aria-label="Navegación principal">
+  <div class="nav-inner container">
+    <a href="#hero" class="nav-logo" aria-label="Inicio">
+      <span class="logo-bracket">{`{`}</span>
+      <span class="logo-name">AB</span>
+      <span class="logo-bracket">{`}`}</span>
+    </a>
+
+    <ul class="nav-links" role="list">
+      {navLinks.map(link => (
+        <li>
+          <a href={link.href} class="nav-link">{link.label}</a>
+        </li>
+      ))}
+    </ul>
+
+    <a href="/cv-alejandro-bohorquez.pdf" download class="btn btn-outline nav-cta" aria-label="Descargar CV">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      CV
+    </a>
+
+    <button class="nav-mobile-btn" id="mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="nav-mobile-menu" id="mobile-menu" aria-hidden="true">
+    {navLinks.map(link => (
+      <a href={link.href} class="nav-mobile-link">{link.label}</a>
+    ))}
+    <a href="/cv-alejandro-bohorquez.pdf" download class="btn btn-primary" style="margin-top:0.5rem;justify-content:center;">
+      Descargar CV
+    </a>
+  </div>
+</nav>
+
+<style>
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+}
+
+nav.scrolled {
+  background: rgba(8, 12, 20, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(37,99,255,0.15);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 70px;
+}
+
+/* Logo */
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.logo-bracket { color: var(--blue-glow); }
+.logo-name    { margin: 0 0.1rem; }
+.nav-logo:hover .logo-name { color: var(--blue-glow); }
+
+/* Links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: var(--blue-glow);
+  transition: var(--transition);
+}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { left: 0.75rem; right: 0.75rem; }
+
+/* CTA */
+.nav-cta { flex-shrink: 0; }
+
+/* Mobile */
+.nav-mobile-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+}
+.nav-mobile-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.nav-mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem 1.5rem;
+  background: rgba(8,12,20,0.97);
+  backdrop-filter: blur(20px);
+}
+.nav-mobile-menu.open { display: flex; }
+
+.nav-mobile-link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: var(--transition);
+}
+.nav-mobile-link:hover { color: var(--blue-glow); }
+
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .nav-mobile-btn { display: flex; }
+}
+</style>
+
+<script>
+  // Scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar?.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  // Mobile menu
+  const btn  = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+    menu?.setAttribute('aria-hidden', String(!open));
+  });
+
+  // Close on link click
+  menu?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn?.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    });
+  });
+</script>

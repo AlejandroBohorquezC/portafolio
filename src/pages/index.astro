@@ -1,0 +1,72 @@
+---
+import Layout   from '../layouts/Layout.astro';
+import Navbar   from '../components/Navbar.astro';
+import Hero     from '../components/Hero.astro';
+import About    from '../components/About.astro';
+import Skills   from '../components/Skills.astro';
+import Projects from '../components/Projects.astro';
+import Experience from '../components/Experience.astro';
+import Contact  from '../components/Contact.astro';
+import Footer   from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<Layout>
+  <Navbar />
+  <main id="main-content">
+    <Hero />
+    <About />
+    <Skills />
+    <Projects />
+    <Experience />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // Intersection Observer — reveal animations + skill bar trigger
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Don't unobserve — keep class
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
+      });
+    },
+    { threshold: 0.35 }
+  );
+
+  sections.forEach(s => navObserver.observe(s));
+</script>
+
+<style is:global>
+  .nav-link.active {
+    color: var(--text-primary) !important;
+  }
+  .nav-link.active::after {
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+  }
+</style>

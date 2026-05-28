@@ -1,0 +1,77 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Alejandro Bohorquez — Full-Stack Developer',
+  description = 'Full-Stack Developer especializado en JavaScript y TypeScript. Construyo aplicaciones web modernas, escalables y orientadas al usuario con Next.js, NestJS, React y más.',
+  image = '/og-image.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content="Alejandro Bohorquez" />
+  <meta name="keywords" content="full-stack developer, javascript, typescript, nextjs, nestjs, react, nodejs, colombia, desarrollador web, frontend, backend" />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(image, Astro.site)} />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:site_name" content="Alejandro Bohorquez" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+  <!-- Performance & Browser -->
+  <meta name="theme-color" content="#080c14" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Alejandro Bohorquez",
+      "jobTitle": "Full-Stack Developer",
+      "url": "https://alejandrobohorquez.dev",
+      "email": "fabohorquezcn@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Girardot",
+        "addressCountry": "CO"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/alejandro-bohorquez-/",
+        "https://github.com/AlejandroBohorquezC"
+      ],
+      "knowsAbout": ["JavaScript", "TypeScript", "Next.js", "NestJS", "React", "Node.js", "AWS"]
+    })}
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>
